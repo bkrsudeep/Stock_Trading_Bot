@@ -83,12 +83,9 @@ with st.sidebar:
 
 if "result" not in st.session_state:
     st.session_state.result = None
-needs_run = st.session_state.result is None or any(
-    key not in st.session_state.result.get("lstm_info", {})
-    for key in ("next_return", "suggestion")
-)
+needs_run = run
 
-if uploaded is not None and (run or needs_run):
+if uploaded is not None and run:
     try:
         data, source = load_uploaded_csv(uploaded)
         selected_ticker = source["ticker"]
@@ -98,7 +95,7 @@ if uploaded is not None and (run or needs_run):
 else:
     data = None
     selected_ticker = ticker
-    if run or needs_run:
+    if run:
         try:
             with st.spinner(f"Getting real past price data for {ticker}..."):
                 data, source = cached_download(ticker)
@@ -115,6 +112,18 @@ if run or needs_run:
         st.error(f"Pipeline failed: {exc}")
         st.exception(exc)
         st.stop()
+
+if st.session_state.result is None:
+    st.subheader("Welcome")
+    st.write(
+        "Choose a stock symbol or upload historical prices, adjust the settings, "
+        "and click **Start training and testing** to explore the bot."
+    )
+    st.info(
+        "The main page is ready. Training is started manually so the app opens "
+        "quickly and does not begin a long computation automatically."
+    )
+    st.stop()
 
 result = st.session_state.result
 data = result["data"]

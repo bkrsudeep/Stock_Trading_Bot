@@ -17,7 +17,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Open `http://localhost:8501`. Choose a ticker, download data, and click **Run training pipeline**. The default uses AAPL and five years of daily data. Use the sidebar controls to reduce epochs or PPO timesteps for a quick demonstration. Streamlit caches completed runs during the session and does not retrain on every rerun.
+Open `http://localhost:8501`. The main page opens immediately. Choose a ticker, download data, and click **Start training and testing** when you are ready. The default uses AAPL and five years of daily data. Use the sidebar controls to reduce epochs or PPO timesteps for a quick demonstration. Streamlit caches completed runs during the session and does not retrain on every rerun.
 
 If Yahoo Finance is unavailable, upload a CSV with `Date`, `Open`, `High`, `Low`, `Close`, and `Volume` columns. The app identifies uploaded data clearly and never substitutes synthetic prices.
 
